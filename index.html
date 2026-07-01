@@ -59,11 +59,34 @@
   .ba-label { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; margin-bottom: 6px; }
   .ba-label.before { background: #FEE2E2; color: #991B1B; }
   .ba-label.after { background: #D1FAE5; color: #065F46; }
-  .tree { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 10px; padding: 20px 24px; font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace; font-size: 13px; line-height: 1.9; color: #94A3B8; margin: 16px 0; overflow-x: auto; }
-  .tree-dir { color: var(--cyan-light); font-weight: 600; }
-  .tree-note { color: #64748B; font-style: italic; }
-  .tree-new { color: var(--add-text); }
-  .tree-gone { color: var(--del-text); text-decoration: line-through; }
+  .filetree { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 10px; padding: 16px 20px 16px 16px; font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace; font-size: 13px; margin: 16px 0; overflow-x: auto; }
+  .filetree ul { list-style: none; margin: 0; padding-left: 1.3em; border-left: 1px dashed #334155; }
+  .filetree > ul { border-left: none; padding-left: 0; }
+  .filetree li { position: relative; padding: 3px 0 3px 1.1em; white-space: nowrap; }
+  .filetree li::before { content: ''; position: absolute; left: 0; top: 1.05em; width: 0.9em; border-top: 1px dashed #334155; }
+  .filetree .ft-row { display: inline-flex; align-items: center; gap: 7px; }
+  .filetree .ft-icon { width: 16px; height: 16px; flex-shrink: 0; color: #64748B; }
+  .filetree .ft-icon svg { width: 100%; height: 100%; display: block; fill: currentColor; }
+  .filetree .ft-name { color: #94A3B8; }
+  .filetree .ft-dir > .ft-row .ft-name { color: #CBD5E1; font-weight: 600; }
+  .filetree .ft-new > .ft-row .ft-name { color: var(--add-text); font-weight: 700; }
+  .filetree .ft-gone > .ft-row .ft-name { color: var(--del-text); text-decoration: line-through; }
+  .filetree .ft-note { color: #64748B; font-style: italic; margin-left: 4px; }
+  .filetree .ft-badge { background: var(--add-bg); color: var(--add-text); font-size: 10px; font-weight: 700; letter-spacing: 0.04em; padding: 1px 7px; border-radius: 100px; margin-left: 4px; }
+  .filetree .ft-icon.ft-c-root { color: #90A4AE; }
+  .filetree .ft-icon.ft-c-app { color: #4CAF50; }
+  .filetree .ft-icon.ft-c-components { color: #FFA726; }
+  .filetree .ft-icon.ft-c-composables { color: #26C6DA; }
+  .filetree .ft-icon.ft-c-pages { color: #EF5350; }
+  .filetree .ft-icon.ft-c-layouts { color: #EC407A; }
+  .filetree .ft-icon.ft-c-middleware { color: #AB47BC; }
+  .filetree .ft-icon.ft-c-plugins { color: #FFCA28; }
+  .filetree .ft-icon.ft-c-assets { color: #F06292; }
+  .filetree .ft-icon.ft-c-utils { color: #FDD835; }
+  .filetree .ft-icon.ft-c-server { color: #42A5F5; }
+  .filetree .ft-icon.ft-c-generic { color: #78909C; }
+  .filetree .ft-new > .ft-row .ft-icon { color: var(--add-text); }
+  .filetree .ft-gone > .ft-row .ft-icon { color: var(--del-text); }
   .table-wrap { overflow-x: auto; margin: 24px 0; }
   table { width: 100%; border-collapse: collapse; font-size: 14px; }
   th { background: var(--navy); color: var(--white); padding: 12px 16px; text-align: left; font-weight: 700; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
@@ -139,27 +162,40 @@
     <div class="callout warn"><span class="callout-icon">⚠️</span><div class="callout-body"><strong>Read This First</strong>If you put a new file in the wrong place, it will not be found by Nuxt. Always check where you are saving your file.</div></div>
     <p style="margin-bottom:16px;">Here is how the folder structure changed:</p>
     <div class="ba-grid">
-      <div><div class="ba-label before">Before — Nuxt 3</div><div class="tree"><span class="tree-dir">apps/web/</span>
-├── <span class="tree-dir">components/</span>
-├── <span class="tree-dir">composables/</span>
-├── <span class="tree-dir">pages/</span>
-├── <span class="tree-dir">layouts/</span>
-├── <span class="tree-dir">plugins/</span>
-├── <span class="tree-dir">middleware/</span>
-├── <span class="tree-dir">assets/</span>
-├── <span class="tree-dir">utils/</span>
-└── <span class="tree-dir">server/</span></div></div>
-      <div><div class="ba-label after">After — Nuxt 4</div><div class="tree"><span class="tree-dir">apps/web/</span>
-├── <span class="tree-new tree-dir">app/</span>  <span class="tree-note">← NEW wrapper folder</span>
-│   ├── <span class="tree-dir">components/</span>
-│   ├── <span class="tree-dir">composables/</span>
-│   ├── <span class="tree-dir">pages/</span>
-│   ├── <span class="tree-dir">layouts/</span>
-│   ├── <span class="tree-dir">plugins/</span>
-│   ├── <span class="tree-dir">middleware/</span>
-│   ├── <span class="tree-dir">assets/</span>
-│   └── <span class="tree-dir">utils/</span>
-└── <span class="tree-dir">server/</span>  <span class="tree-note">← stays at root level</span></div></div>
+      <div><div class="ba-label before">Before — Nuxt 3</div><div class="filetree"><ul>
+        <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-root"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">apps/web/</span></span>
+          <ul>
+            <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-components"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">components/</span></span></li>
+            <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-composables"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">composables/</span></span></li>
+            <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-pages"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">pages/</span></span></li>
+            <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-layouts"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">layouts/</span></span></li>
+            <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-plugins"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">plugins/</span></span></li>
+            <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-middleware"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">middleware/</span></span></li>
+            <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-assets"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">assets/</span></span></li>
+            <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-utils"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">utils/</span></span></li>
+            <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-server"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">server/</span></span></li>
+          </ul>
+        </li>
+      </ul></div></div>
+      <div><div class="ba-label after">After — Nuxt 4</div><div class="filetree"><ul>
+        <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-root"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">apps/web/</span></span>
+          <ul>
+            <li class="ft-dir ft-new"><span class="ft-row"><span class="ft-icon ft-c-app"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">app/</span><span class="ft-badge">NEW</span></span>
+              <ul>
+                <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-components"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">components/</span></span></li>
+                <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-composables"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">composables/</span></span></li>
+                <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-pages"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">pages/</span></span></li>
+                <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-layouts"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">layouts/</span></span></li>
+                <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-plugins"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">plugins/</span></span></li>
+                <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-middleware"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">middleware/</span></span></li>
+                <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-assets"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">assets/</span></span></li>
+                <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-utils"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">utils/</span></span></li>
+              </ul>
+            </li>
+            <li class="ft-dir"><span class="ft-row"><span class="ft-icon ft-c-server"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">server/</span><span class="ft-note">← stays at root level</span></span></li>
+          </ul>
+        </li>
+      </ul></div></div>
     </div>
     <div class="callout success"><span class="callout-icon">✅</span><div class="callout-body"><strong>Simple Rule to Remember</strong>Everything that runs in the browser goes inside <code>apps/web/app/</code>. Server code (API routes, server utilities) stays in <code>apps/web/server/</code>.</div></div>
   </div>
@@ -344,16 +380,26 @@ consola.error(<span class="hl-str">'Something failed'</span>);</pre></div></div>
     <p class="section-lead">All components that were in the <code>Trepanel/</code> folder have been renamed to <code>TileMountainAE/</code>. The brand "Trepanel" is being retired and its products now appear on the Tile Mountain UAE website.</p>
     <div class="callout warn"><span class="callout-icon">⚠️</span><div class="callout-body"><strong>Important for UAE / Trepanel Work</strong>If you are asked to work on any Trepanel-related feature, look for the files under <code>TileMountainAE/</code> instead. The old <code>Trepanel/</code> folder has been removed.</div></div>
     <div class="ba-grid">
-      <div><div class="ba-label before">Old Path — Does Not Exist</div><div class="tree"><span class="tree-gone">app/components/Trepanel/</span>
-<span class="tree-gone">  ├── Home/</span>
-<span class="tree-gone">  ├── Checkout/</span>
-<span class="tree-gone">  ├── Samples/</span>
-<span class="tree-gone">  └── Successpage/</span></div></div>
-      <div><div class="ba-label after">New Path — Use This</div><div class="tree"><span class="tree-new">app/components/TileMountainAE/</span>
-<span class="tree-new">  ├── Home/</span>
-<span class="tree-new">  ├── Checkout/</span>
-<span class="tree-new">  ├── Samples/</span>
-<span class="tree-new">  └── Successpage/</span></div></div>
+      <div><div class="ba-label before">Old Path — Does Not Exist</div><div class="filetree"><ul>
+        <li class="ft-dir ft-gone"><span class="ft-row"><span class="ft-icon"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">app/components/Trepanel/</span></span>
+          <ul>
+            <li class="ft-dir ft-gone"><span class="ft-row"><span class="ft-icon"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">Home/</span></span></li>
+            <li class="ft-dir ft-gone"><span class="ft-row"><span class="ft-icon"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">Checkout/</span></span></li>
+            <li class="ft-dir ft-gone"><span class="ft-row"><span class="ft-icon"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">Samples/</span></span></li>
+            <li class="ft-dir ft-gone"><span class="ft-row"><span class="ft-icon"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">Successpage/</span></span></li>
+          </ul>
+        </li>
+      </ul></div></div>
+      <div><div class="ba-label after">New Path — Use This</div><div class="filetree"><ul>
+        <li class="ft-dir ft-new"><span class="ft-row"><span class="ft-icon"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">app/components/TileMountainAE/</span></span>
+          <ul>
+            <li class="ft-dir ft-new"><span class="ft-row"><span class="ft-icon"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">Home/</span></span></li>
+            <li class="ft-dir ft-new"><span class="ft-row"><span class="ft-icon"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">Checkout/</span></span></li>
+            <li class="ft-dir ft-new"><span class="ft-row"><span class="ft-icon"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">Samples/</span></span></li>
+            <li class="ft-dir ft-new"><span class="ft-row"><span class="ft-icon"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h4.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H16a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg></span><span class="ft-name">Successpage/</span></span></li>
+          </ul>
+        </li>
+      </ul></div></div>
     </div>
     <div class="table-wrap"><table><thead><tr><th>Deleted File</th><th>Replacement</th></tr></thead><tbody>
       <tr><td><code>apps/web/app/config/trepanel.ts</code></td><td>Use <code>tile-mountain-ae.ts</code></td></tr>
